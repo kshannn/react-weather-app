@@ -1,38 +1,123 @@
-.App {
-  text-align: center;
+html {
+  overflow: hidden;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+#App {
+  background-image: url("./assets/bg-light.png");
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+#container {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  width: 40%;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+/* === Section Wrappers === */
+
+#searchWrapper,
+#historyWrapper,
+#resultWrapper {
+  width: 100%;
+}
+
+#searchWrapper {
+  max-height: 4vh;
+  display: flex;
+}
+
+#resultWrapper {
+  min-height: 30vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#historyWrapper {
+  min-height: 40vh;
+}
+
+/* === Search Fields === */
+.searchField {
+  flex-grow: 2;
+}
+
+.searchFieldIcons {
+  flex-grow: 1;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+#city,
+#country {
+  width: 80%;
+  height: 100%;
+  border: none;
+  border-radius: 4px;
+  padding: 0px 20px;
+}
+
+#search,
+#clear {
+  height: 70%;
+}
+
+/* === Weather Result === */
+#mainResult {
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#sun {
+  height: 280px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#weatherInformation {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  align-items: center;
+}
+
+#weatherImageWrapper {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#timeAndLocation {
+  display: flex;
+  justify-content: space-around;
+}
+
+#temperature {
+  font-size: 30pt;
+}
+
+/* === Search History ===  */
+
+.queryRow {
+  display: flex;
+}
+
+#left {
+  flex-grow: 1;
+  display: flex;
+  gap: 0px 30px;
+}
+
+#right {
+  flex-grow: 1;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0px 30px;
 }
