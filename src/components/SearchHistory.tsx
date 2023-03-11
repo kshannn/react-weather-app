@@ -46,7 +46,7 @@ export const SearchHistory = () => {
 
   return (
     <div id="historyWrapper">
-      <h1>SearchHistory</h1>
+      <h1>Search History</h1>
       {renderHistory()}
     </div>
   );
