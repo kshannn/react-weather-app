@@ -48,10 +48,14 @@ export const SearchHistory = () => {
     setListOfSearchHistory(_updatedSearchHistory);
   };
 
-  const recallSearchQuery = async (query: string) => {
+  const recallSearchQuery = async (city: string, country: string) => {
     setIsPendingAction(true);
     try {
-      const weatherResponse: any = await fetchWeather(query);
+      const weatherResponse: any = await fetchWeather({
+        city: city,
+        country: country,
+        isCountryCode: true,
+      });
       if (weatherResponse.status === HTTP_STATUS.OK) {
         const { country, description, dt, humidity, name, temp } =
           weatherResponse.data;
@@ -101,7 +105,7 @@ export const SearchHistory = () => {
                     icon={faMagnifyingGlass as IconProp}
                     id="recall"
                     onClick={() => {
-                      recallSearchQuery(query);
+                      recallSearchQuery(query, countryCode);
                     }}
                   />
                 </div>

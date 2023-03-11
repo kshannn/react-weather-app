@@ -1,14 +1,27 @@
 import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
+import {
+  faMagnifyingGlass,
+  faXmark,
+} from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
 import { fetchWeather } from "../service/weatherService";
 import WeatherContext from "../contexts/WeatherContext";
 import { HTTP_STATUS } from "../constants";
 
+interface Query {
+  country: string;
+  city: string;
+}
+
 export const SearchFields = () => {
-  const [cityQuery, setCityQuery] = useState("");
+  const [query, setQuery] = useState<Query>({
+    country: "",
+    city: "",
+  });
+  // const [cityQuery, setCityQuery] = useState("");
+  // const [countryQuery, setCountryQuery] = useState("");
   const [error, setError] = useState("");
   const weatherContext: any = useContext(WeatherContext);
   const {
@@ -34,7 +47,10 @@ export const SearchFields = () => {
   }, [isPendingAction]);
 
   const updateField = (e: any) => {
-    setCityQuery(e.target.value);
+    setQuery({
+      ...query,
+      [e.target.name]: e.target.value,
+    });
   };
 
   const addToSearchHistory = (body: {
@@ -56,10 +72,17 @@ export const SearchFields = () => {
 
   const searchQuery = async () => {
     setError("");
-    if (!cityQuery) return;
+    if ((!query.city && !query.country) || !query.city) {
+      toast.error("Please enter a valid city name");
+      return;
+    }
     setIsPendingAction(true);
     try {
-      const weatherResponse: any = await fetchWeather(cityQuery);
+      const weatherResponse: any = await fetchWeather({
+        city: query.city,
+        country: query.country,
+        isCountryCode: false,
+      });
       if (weatherResponse.status === HTTP_STATUS.OK) {
         const { country, description, dt, humidity, name, temp } =
           weatherResponse.data;
@@ -85,17 +108,23 @@ export const SearchFields = () => {
       console.log(err);
     }
     setIsPendingAction(false);
-
   };
 
   const clearQuery = () => {
-    setCityQuery("");
+    setQuery({ city: "", country: "" });
   };
 
   return (
     <div id="searchWrapper">
       <div className="searchField">
-        <input type="text" placeholder="Country" id="country" />
+        <input
+          type="text"
+          placeholder="Country"
+          id="country"
+          name="country"
+          value={query.country}
+          onChange={updateField}
+        />
       </div>
       <div className="searchField">
         <input
@@ -103,7 +132,7 @@ export const SearchFields = () => {
           placeholder="City"
           id="city"
           name="city"
-          value={cityQuery}
+          value={query.city}
           onChange={updateField}
         />
       </div>
