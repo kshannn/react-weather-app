@@ -3,6 +3,7 @@ import Sun from "../assets/sun.png";
 import moment from "moment";
 import { CURRENT_RESULT_TIME_FORMAT } from "../constants";
 import WeatherContext from "../contexts/WeatherContext";
+import {capitalize} from "lodash"
 
 export const WeatherResult = () => {
   const weatherContext = useContext(WeatherContext);
@@ -16,13 +17,13 @@ export const WeatherResult = () => {
       <div id="resultOverlay">
         <div id="mainResult">
           <div id="weatherInformation">
-            <p id="temperature">{temperature}°C</p>
-            <div>{description}</div>
+            <span id="temperature">{temperature}°C</span>
+            <div>{capitalize(description)}</div>
             <div>Humidity: {humidity}%</div>
           </div>
           <div id="weatherImageWrapper">
             <div id="weatherImage">
-              <img src={Sun} alt="" id="sun" />
+              <img src={Sun} alt="sun" id="sun" />
             </div>
           </div>
         </div>

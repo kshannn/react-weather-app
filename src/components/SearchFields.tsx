@@ -1,16 +1,37 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
+import { toast } from "react-toastify";
 import { fetchWeather } from "../service/weatherService";
 import WeatherContext from "../contexts/WeatherContext";
 import { HTTP_STATUS } from "../constants";
 
 export const SearchFields = () => {
   const [cityQuery, setCityQuery] = useState("");
+  const [error, setError] = useState("");
   const weatherContext: any = useContext(WeatherContext);
-  const { listOfSearchHistory, setListOfSearchHistory, setWeatherData } =
-    weatherContext;
+  const {
+    listOfSearchHistory,
+    setListOfSearchHistory,
+    setWeatherData,
+    isPendingAction,
+    setIsPendingAction,
+  } = weatherContext;
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (isPendingAction) {
+      toast.loading("Fetching data...", { toastId: "fetchToast" });
+    } else {
+      toast.dismiss("fetchToast");
+    }
+  }, [isPendingAction]);
 
   const updateField = (e: any) => {
     setCityQuery(e.target.value);
@@ -34,6 +55,9 @@ export const SearchFields = () => {
   };
 
   const searchQuery = async () => {
+    setError("");
+    if (!cityQuery) return;
+    setIsPendingAction(true);
     try {
       const weatherResponse: any = await fetchWeather(cityQuery);
       if (weatherResponse.status === HTTP_STATUS.OK) {
@@ -54,10 +78,14 @@ export const SearchFields = () => {
           queryTime: dt,
           countryCode: country,
         });
+      } else {
+        setError(weatherResponse.data.message);
       }
     } catch (err) {
       console.log(err);
     }
+    setIsPendingAction(false);
+
   };
 
   const clearQuery = () => {
@@ -67,12 +95,12 @@ export const SearchFields = () => {
   return (
     <div id="searchWrapper">
       <div className="searchField">
-        <input type="text" placeholder="country" id="country" />
+        <input type="text" placeholder="Country" id="country" />
       </div>
       <div className="searchField">
         <input
           type="text"
-          placeholder="city"
+          placeholder="City"
           id="city"
           name="city"
           value={cityQuery}

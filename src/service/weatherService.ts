@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from "axios";
 
 const BASE_URL = `https://api.openweathermap.org/data/2.5/weather`;
 
-const createSuccessResponseObj = (res: AxiosResponse<any, any>) => {
+const createResponseObj = (res: AxiosResponse<any, any>) => {
   return {
     status: res.status,
     data: res.data,
@@ -26,12 +26,12 @@ const fetchWeather = async (query: string = "singapore") => {
     const transformedWeatherResponse = {
       data: { temp, humidity, dt, name, country, description },
     };
-    return createSuccessResponseObj({
+    return createResponseObj({
       ...response,
       ...transformedWeatherResponse,
     });
-  } catch (err) {
-    return err;
+  } catch (err: any) {
+    return createResponseObj(err.response);
   }
 };
 
