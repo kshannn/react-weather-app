@@ -38,7 +38,6 @@ html {
   flex-direction: column;
 }
 
-
 #historyWrapper {
   min-height: 40vh;
 }
@@ -70,8 +69,11 @@ html {
   height: 70%;
 }
 
-#search:hover, #clear:hover{
-  color:rgba(0,0,0,0.5);
+#search:hover,
+#clear:hover,
+#recall:hover,
+#clearHistory:hover {
+  color: rgba(0, 0, 0, 0.5);
   cursor: pointer;
 }
 
@@ -85,11 +87,10 @@ html {
 #resultOverlay {
   height: fit-content;
   width: 100%;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 20px;
   padding-bottom: 20px;
 }
-
 
 #sun {
   height: 280px;
@@ -123,8 +124,8 @@ html {
 .queryRow {
   display: flex;
   margin: 15px 0px;
-  background: rgba(255,255,255,0.2);
-  padding:15px;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 15px;
   border-radius: 15px;
 }
 

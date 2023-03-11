@@ -1,13 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import Sun from "../assets/sun.png";
 import moment from "moment";
-import { Weather } from "../App";
+import { CURRENT_RESULT_TIME_FORMAT } from "../constants";
+import WeatherContext from "../contexts/WeatherContext";
 
-interface Props {
-  weatherData: Weather
-}
-export const WeatherResult = ({weatherData}:Props) => {
-  const {country, countryCode, dateTime, description, humidity, temperature} = weatherData
+export const WeatherResult = () => {
+  const weatherContext = useContext(WeatherContext);
+  const { weatherData }: any = weatherContext;
+  const { country, countryCode, dateTime, description, humidity, temperature } =
+    weatherData;
 
   return (
     <div id="resultWrapper">
@@ -26,10 +27,8 @@ export const WeatherResult = ({weatherData}:Props) => {
           </div>
         </div>
         <div id="timeAndLocation">
-          <div>
-            {countryCode && country && `${countryCode}, ${country}` }
-          </div>
-          <div>{moment(dateTime, "X").format("ddd, DD MMM YYYY, h:mm A")}</div>
+          <div>{countryCode && country && `${countryCode}, ${country}`}</div>
+          <div>{moment(dateTime, "X").format(CURRENT_RESULT_TIME_FORMAT)}</div>
         </div>
       </div>
     </div>

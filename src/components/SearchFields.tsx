@@ -1,28 +1,44 @@
-import React, { useState } from "react";
+import { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { fetchWeather } from "../service/weatherService";
+import WeatherContext from "../contexts/WeatherContext";
+import { HTTP_STATUS } from "../constants";
 
-export const SearchFields = ({ setWeatherData }: any) => {
-  const [countryQuery, setCountryQuery] = useState("");
+export const SearchFields = () => {
+  const [cityQuery, setCityQuery] = useState("");
+  const weatherContext: any = useContext(WeatherContext);
+  const { listOfSearchHistory, setListOfSearchHistory, setWeatherData } =
+    weatherContext;
 
   const updateField = (e: any) => {
-    setCountryQuery(e.target.value);
+    setCityQuery(e.target.value);
+  };
+
+  const addToSearchHistory = (body: {
+    query: string;
+    queryTime: number;
+    countryCode: string;
+  }) => {
+    const updatedSearchHistory = [
+      ...listOfSearchHistory,
+      {
+        query: body.query,
+        queryTime: body.queryTime,
+        countryCode: body.countryCode,
+      },
+    ];
+    setListOfSearchHistory(updatedSearchHistory);
+    localStorage.setItem("searchHistory", JSON.stringify(updatedSearchHistory));
   };
 
   const searchQuery = async () => {
     try {
-      const weatherResponse: any = await fetchWeather(countryQuery);
-      if (weatherResponse.status === 200) {
-        const {
-          weather,
-          main: { temp, humidity },
-          dt,
-          name,
-          sys: { country },
-        } = weatherResponse.data;
-        const { description } = weather[0];
+      const weatherResponse: any = await fetchWeather(cityQuery);
+      if (weatherResponse.status === HTTP_STATUS.OK) {
+        const { country, description, dt, humidity, name, temp } =
+          weatherResponse.data;
 
         setWeatherData({
           temperature: temp,
@@ -32,6 +48,12 @@ export const SearchFields = ({ setWeatherData }: any) => {
           countryCode: country,
           description,
         });
+
+        addToSearchHistory({
+          query: name,
+          queryTime: dt,
+          countryCode: country,
+        });
       }
     } catch (err) {
       console.log(err);
@@ -39,21 +61,21 @@ export const SearchFields = ({ setWeatherData }: any) => {
   };
 
   const clearQuery = () => {
-    setCountryQuery("");
+    setCityQuery("");
   };
 
   return (
     <div id="searchWrapper">
       <div className="searchField">
-        <input type="text" placeholder="city" id="city" />
+        <input type="text" placeholder="country" id="country" />
       </div>
       <div className="searchField">
         <input
           type="text"
-          placeholder="country"
-          id="country"
-          name="country"
-          value={countryQuery}
+          placeholder="city"
+          id="city"
+          name="city"
+          value={cityQuery}
           onChange={updateField}
         />
       </div>
