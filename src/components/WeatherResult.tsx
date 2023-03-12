@@ -6,7 +6,7 @@ import { capitalize } from "lodash";
 
 export const WeatherResult = () => {
   const weatherContext = useContext(WeatherContext);
-  const { weatherData }: any = weatherContext;
+  const { weatherData, defaultDisplay }: any = weatherContext;
   const {
     country,
     countryCode,
@@ -22,7 +22,7 @@ export const WeatherResult = () => {
   return (
     <div id="resultWrapper">
       <h1>Today's Weather</h1>
-      <div id="resultOverlay">
+      {defaultDisplay? <div className="resultOverlay">
         <div id="mainResult">
           <div id="weatherInformation">
             <span id="temperature">{temperature}°C</span>
@@ -44,7 +44,8 @@ export const WeatherResult = () => {
           <div>{countryCode && country && `${country}, ${countryCode}`}</div>
           <div>{moment(dateTime, "X").format(CURRENT_RESULT_TIME_FORMAT)}</div>
         </div>
-      </div>
+      </div>:<div className="resultOverlay noResult">No result to display</div>}
+      
     </div>
   );
 };

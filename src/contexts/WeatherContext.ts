@@ -1,5 +1,5 @@
 import { createContext } from "react";
 
-const WeatherContext = createContext({})
+const WeatherContext = createContext({});
 
-export default WeatherContext
+export default WeatherContext;

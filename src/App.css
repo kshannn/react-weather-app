@@ -106,12 +106,19 @@ h1 {
   justify-content: center;
 }
 
-#resultOverlay {
+.resultOverlay {
   height: fit-content;
   width: 100%;
   background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   padding-bottom: 20px;
+}
+
+.noResult {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0px;
 }
 
 #weatherIcon {

@@ -36,6 +36,7 @@ const App = () => {
   const [listOfSearchHistory, setListOfSearchHistory] = useState([]);
   const [isPendingAction, setIsPendingAction] = useState(false);
   const [error, setError] = useState("");
+  const [defaultDisplay, setDefaultDisplay] = useState(true);
 
   useEffect(() => {
     if (error) {
@@ -71,11 +72,14 @@ const App = () => {
             description,
             icon,
           });
+          setDefaultDisplay(true);
         } else {
           setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
+          setDefaultDisplay(false);
         }
       } catch (err) {
         setError(FETCH_DATA_FAIL_MESSAGE);
+        setDefaultDisplay(false);
       }
     };
     fetchDefaultWeather();
@@ -92,6 +96,8 @@ const App = () => {
         isPendingAction,
         error,
         setError,
+        defaultDisplay,
+        setDefaultDisplay,
       }}
     >
       <div id="App">

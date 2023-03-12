@@ -25,6 +25,7 @@ export const SearchFields = () => {
     isPendingAction,
     setIsPendingAction,
     setError,
+    setDefaultDisplay,
   } = weatherContext;
 
   useEffect(() => {
@@ -102,6 +103,7 @@ export const SearchFields = () => {
           queryTime: dt,
           countryCode: country,
         });
+        setDefaultDisplay(true);
       } else {
         setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
       }

@@ -26,6 +26,7 @@ export const SearchHistory = () => {
     isPendingAction,
     setIsPendingAction,
     setError,
+    setDefaultDisplay,
   } = weatherContext;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -92,6 +93,7 @@ export const SearchHistory = () => {
           description,
           icon,
         });
+        setDefaultDisplay(true);
       } else {
         setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
       }

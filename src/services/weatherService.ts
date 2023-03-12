@@ -44,7 +44,17 @@ const fetchWeather = async (
     const { description, icon } = weather[0];
 
     const transformedWeatherResponse = {
-      data: { temp, humidity, temp_max, temp_min, dt, name, country, description, icon },
+      data: {
+        temp,
+        humidity,
+        temp_max,
+        temp_min,
+        dt,
+        name,
+        country,
+        description,
+        icon,
+      },
     };
     return createResponseObj({
       ...response,
