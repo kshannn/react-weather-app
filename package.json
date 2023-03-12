@@ -51,6 +51,7 @@
     ]
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.191"
+    "@types/lodash": "^4.14.191",
+    "dotenv-webpack": "^8.0.1"
   }
 }
