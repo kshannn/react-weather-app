@@ -89,7 +89,7 @@ export const SearchFields = () => {
         setWeatherData({
           temperature: temp,
           maxTemperature: temp_max,
-          minTemperauture: temp_min,
+          minTemperature: temp_min,
           humidity,
           dateTime: dt,
           country: name,
