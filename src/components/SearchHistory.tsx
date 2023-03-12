@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import {
@@ -6,10 +6,15 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import WeatherContext from "../contexts/WeatherContext";
-import { HTTP_STATUS, SEARCH_HISTORY_TIME_FORMAT } from "../constants";
+import {
+  HTTP_STATUS,
+  NUM_OF_ITEMS_PER_PAGE,
+  SEARCH_HISTORY_TIME_FORMAT,
+} from "../constants";
 import moment from "moment";
 import { fetchWeather } from "../service/weatherService";
 import { toast } from "react-toastify";
+import ReactPaginate from "react-paginate";
 
 export const SearchHistory = () => {
   const weatherContext: any = useContext(WeatherContext);
@@ -20,6 +25,11 @@ export const SearchHistory = () => {
     isPendingAction,
     setIsPendingAction,
   } = weatherContext;
+  const [currentPage, setCurrentPage] = useState(0);
+
+  const handlePageChange = ({ selected }: any) => {
+    setCurrentPage(selected);
+  };
 
   useEffect(() => {
     const _searchHistoryList: any = localStorage.getItem("searchHistory");
@@ -76,8 +86,14 @@ export const SearchHistory = () => {
   };
 
   const renderHistory = () => {
-    if (listOfSearchHistory)
-      return listOfSearchHistory.map(
+    const offset = currentPage * NUM_OF_ITEMS_PER_PAGE;
+    const currentPageHistory = listOfSearchHistory.slice(
+      offset,
+      offset + NUM_OF_ITEMS_PER_PAGE
+    );
+
+    if (currentPageHistory.length) {
+      return currentPageHistory.map(
         (
           {
             query,
@@ -86,10 +102,12 @@ export const SearchHistory = () => {
           }: { query: string; queryTime: number; countryCode: string },
           index: number
         ) => {
+          const currentIndex = index + offset;
+
           return (
-            <div className="queryRow" key={index}>
+            <div className="queryRow" key={currentIndex}>
               <div className="left">
-                <div id="historyIndex">{index + 1}</div>
+                <div id="historyIndex">{currentIndex + 1}</div>
               </div>
               <div className="middle">
                 <div id="query">
@@ -114,7 +132,7 @@ export const SearchHistory = () => {
                     icon={faTrashCan as IconProp}
                     id="clearHistory"
                     onClick={() => {
-                      clearSearchHistory(index);
+                      clearSearchHistory(currentIndex);
                     }}
                   />
                 </div>
@@ -123,16 +141,36 @@ export const SearchHistory = () => {
           );
         }
       );
+    } else {
+      return <div className="queryRow">No Record</div>;
+    }
   };
 
   return (
     <div id="historyWrapper">
       <h1>Search History</h1>
-      {listOfSearchHistory.length ? (
-        renderHistory()
-      ) : (
-        <div className="queryRow">No Record</div>
-      )}
+
+      {renderHistory()}
+      <ReactPaginate
+        pageCount={Math.ceil(
+          listOfSearchHistory.length / NUM_OF_ITEMS_PER_PAGE
+        )}
+        onPageChange={handlePageChange}
+        containerClassName="pagination"
+        activeClassName="active"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        previousLabel="<"
+        nextLabel=">"
+        breakLabel="..."
+        renderOnZeroPageCount={()=>{}}
+      />
     </div>
   );
 };

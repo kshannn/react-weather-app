@@ -66,7 +66,7 @@ h1 {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding:4px;
+  padding: 4px;
 }
 
 #city,
@@ -174,7 +174,43 @@ h1 {
   gap: 0px 30px;
 }
 
-/* Media queries */
+/* === Pagination CSS === */
+
+.pagination {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 0px 20px;
+}
+
+.page-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 25px;
+  min-width: 25px;
+  border-radius: 25px;
+}
+
+.page-item:hover {
+  background: #d7d7d760;
+  cursor: pointer;
+}
+
+.page-item.disabled {
+  color: #31313160;
+  cursor: not-allowed;
+}
+
+.active {
+  background: #a983da;
+}
+
+.active:hover {
+  background: #a067ec;
+}
+
+/* === Media queries ===*/
 
 @media only screen and (max-width: 1400px) {
   #container {
