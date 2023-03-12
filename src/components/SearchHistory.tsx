@@ -16,6 +16,7 @@ import moment from "moment";
 import { fetchWeather } from "../services/weatherService";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
+import { renderCountryDetails } from "./WeatherResult";
 
 export const SearchHistory = () => {
   const weatherContext: any = useContext(WeatherContext);
@@ -128,9 +129,7 @@ export const SearchHistory = () => {
                 <div id="historyIndex">{currentIndex + 1}</div>
               </div>
               <div className="middle">
-                <div id="query">
-                  {query}, {countryCode}
-                </div>
+                <div id="query">{renderCountryDetails(countryCode, query)}</div>
                 <div id="queryTime">
                   {moment(queryTime, "X").format(SEARCH_HISTORY_TIME_FORMAT)}
                 </div>
