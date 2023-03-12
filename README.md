@@ -1,46 +1,108 @@
-# Getting Started with Create React App
+# Today's Weather
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Project Summary
 
-## Available Scripts
+Live link to website: https://keen-kitten-bb3c92.netlify.app/
 
-In the project directory, you can run:
+**Project Context**
 
-### `npm start`
+"Today's Weather" is a web application for users to retrieve weather information (e.g. temperature, humidity) for a city/country. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Features
 
-### `npm test`
+1. User can search for weather information for a city/country
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+2. Valid search would be saved in search history
 
-### `npm run build`
+3. User can retrieve weather information based on the list of city/country recorded in their search history
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+4. User can clear their search history
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5. Search history is ordered by pagination
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+## Technologies Used
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+* TypeScript
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+* CSS3
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+* [React](https://reactjs.org/)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+* [Git](https://git-scm.com/)
+    * For version control
 
-## Learn More
+* [GitHub](http://github.com)
+    * To create repository and store source code
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+* [Netlify](https://www.netlify.com/)
+    * To deploy React application
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+* [Google Font](https://fonts.google.com/)
+
+* [FontAwesome](https://fontawesome.com/icons)
+
+* [Moment.js](https://momentjs.com/)
+    * To format date and time
+
+* [react-toastify](https://www.npmjs.com/package/react-toastify)
+    * To display message to user
+
+* [react-paginate](https://github.com/AdeleD/react-paginate)
+
+* [iso-3166-1-alpha-2](https://www.npmjs.com/package/iso-3166-1-alpha-2)
+    * To retrieve country code based on country name
+
+* [lodash](https://www.npmjs.com/package/lodash)
+
+* Localstorage
+    * To store search history
+
+## Deployment
+
+The website is hosted using Netlify.
+
+**Steps to deployment using Netlify**
+1. Add, commit, and push any latest edits made to GitHub via the terminal.
+2. Go to [Netlify](https://www.netlify.com/) and log in with Github account.
+3. Click on "Add new site" button and click on "Import an existing project"
+4. Select "GitHub" as the Git provider
+5. Authorize access to GitHub should a pop-up appear
+6. Select the repository that you want to deploy
+7. Add in environment variables
+8. Click on "Deploy site" button to get a link for the deployed site
+
+**Steps to run project locally**
+
+1. Fork or git clone the project at https://github.com/kshannn/react-weather-app
+
+2. Run npm install to install the dependencies
+```
+npm install
+```
+
+3. Obtain OpenWeather API key (requires account creation at https://openweathermap.org/)
+
+4. Create an .env file, include the following variable in the .env file and replace <API_KEY> with the API key obtained from the previous step: 
+```
+REACT_APP_OPENWEATHER_API_KEY = <API_KEY>
+```
+
+5. Run npm start 
+```
+npm start
+```
+
+6. The website should start up, if not visit http://localhost:3000/ to see the website
+
+
+
+## Dependencies
+
+* [Axios](https://cdnjs.com/libraries/axios)
+    * To call API
+
+## Credits
+
+* [OpenWeather API](https://openweathermap.org/api) 
