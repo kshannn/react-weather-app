@@ -1,14 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
-import {
-  faMagnifyingGlass,
-  faXmark,
-} from "@fortawesome/free-solid-svg-icons";
+import { faMagnifyingGlass, faXmark } from "@fortawesome/free-solid-svg-icons";
 import { toast } from "react-toastify";
-import { fetchWeather } from "../service/weatherService";
+import { fetchWeather } from "../services/weatherService";
 import WeatherContext from "../contexts/WeatherContext";
-import { HTTP_STATUS } from "../constants";
+import { FETCH_DATA_FAIL_MESSAGE, HTTP_STATUS } from "../constants";
 
 interface Query {
   country: string;
@@ -20,9 +17,6 @@ export const SearchFields = () => {
     country: "",
     city: "",
   });
-  // const [cityQuery, setCityQuery] = useState("");
-  // const [countryQuery, setCountryQuery] = useState("");
-  const [error, setError] = useState("");
   const weatherContext: any = useContext(WeatherContext);
   const {
     listOfSearchHistory,
@@ -30,13 +24,8 @@ export const SearchFields = () => {
     setWeatherData,
     isPendingAction,
     setIsPendingAction,
+    setError,
   } = weatherContext;
-
-  useEffect(() => {
-    if (error) {
-      toast.error(error);
-    }
-  }, [error]);
 
   useEffect(() => {
     if (isPendingAction) {
@@ -84,16 +73,28 @@ export const SearchFields = () => {
         isCountryCode: false,
       });
       if (weatherResponse.status === HTTP_STATUS.OK) {
-        const { country, description, dt, humidity, name, temp } =
-          weatherResponse.data;
+        const {
+          country,
+          description,
+          dt,
+          humidity,
+          name,
+          temp,
+          icon,
+          temp_max,
+          temp_min,
+        } = weatherResponse.data;
 
         setWeatherData({
           temperature: temp,
+          maxTemperature: temp_max,
+          minTemperauture: temp_min,
           humidity,
           dateTime: dt,
           country: name,
           countryCode: country,
           description,
+          icon,
         });
 
         addToSearchHistory({
@@ -102,10 +103,10 @@ export const SearchFields = () => {
           countryCode: country,
         });
       } else {
-        setError(weatherResponse.data.message);
+        setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
       }
     } catch (err) {
-      console.log(err);
+      setError(FETCH_DATA_FAIL_MESSAGE);
     }
     setIsPendingAction(false);
   };

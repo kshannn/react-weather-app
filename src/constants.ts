@@ -7,3 +7,5 @@ export enum HTTP_STATUS {
 }
 
 export const NUM_OF_ITEMS_PER_PAGE = 3;
+
+export const FETCH_DATA_FAIL_MESSAGE = "Unable to fetch weather data";

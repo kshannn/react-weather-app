@@ -7,12 +7,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import WeatherContext from "../contexts/WeatherContext";
 import {
+  FETCH_DATA_FAIL_MESSAGE,
   HTTP_STATUS,
   NUM_OF_ITEMS_PER_PAGE,
   SEARCH_HISTORY_TIME_FORMAT,
 } from "../constants";
 import moment from "moment";
-import { fetchWeather } from "../service/weatherService";
+import { fetchWeather } from "../services/weatherService";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
 
@@ -24,6 +25,7 @@ export const SearchHistory = () => {
     setWeatherData,
     isPendingAction,
     setIsPendingAction,
+    setError,
   } = weatherContext;
   const [currentPage, setCurrentPage] = useState(0);
 
@@ -67,20 +69,34 @@ export const SearchHistory = () => {
         isCountryCode: true,
       });
       if (weatherResponse.status === HTTP_STATUS.OK) {
-        const { country, description, dt, humidity, name, temp } =
-          weatherResponse.data;
+        const {
+          country,
+          description,
+          dt,
+          humidity,
+          name,
+          temp,
+          icon,
+          temp_max,
+          temp_min,
+        } = weatherResponse.data;
 
         setWeatherData({
           temperature: temp,
+          maxTemperature: temp_max,
+          minTemperature: temp_min,
           humidity,
           dateTime: dt,
           country: name,
           countryCode: country,
           description,
+          icon,
         });
+      } else {
+        setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
       }
     } catch (err) {
-      console.log(err);
+      setError(FETCH_DATA_FAIL_MESSAGE);
     }
     setIsPendingAction(false);
   };
@@ -111,7 +127,7 @@ export const SearchHistory = () => {
               </div>
               <div className="middle">
                 <div id="query">
-                  {countryCode}, {query}
+                  {query}, {countryCode}
                 </div>
                 <div id="queryTime">
                   {moment(queryTime, "X").format(SEARCH_HISTORY_TIME_FORMAT)}
@@ -169,7 +185,7 @@ export const SearchHistory = () => {
         previousLabel="<"
         nextLabel=">"
         breakLabel="..."
-        renderOnZeroPageCount={()=>{}}
+        renderOnZeroPageCount={() => {}}
       />
     </div>
   );
