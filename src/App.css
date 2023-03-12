@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;1,300&display=swap");
 
-
 /* === Main === */
 
 html {
@@ -147,6 +146,11 @@ h1 {
   color: #753dbc;
 }
 
+#weatherInformation div:nth-child(3),
+#weatherInformation div:nth-child(4) {
+  font-size: 14px;
+}
+
 /* === Search History ===  */
 
 .queryRow {
@@ -265,11 +269,16 @@ h1 {
 
   #timeAndLocation {
     margin-top: 10px;
-    font-size:14px;
+    font-size: 14px;
   }
 
   #weatherInformation > div {
     font-size: 10pt;
+  }
+
+  #weatherInformation div:nth-child(3),
+  #weatherInformation div:nth-child(4) {
+    font-size: 11px;
   }
 
   #city,
@@ -277,7 +286,8 @@ h1 {
     padding: 0px 20px;
   }
 
-  #query, #queryTime {
+  #query,
+  #queryTime {
     font-size: 12px;
   }
 }
