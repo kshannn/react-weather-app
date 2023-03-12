@@ -228,12 +228,16 @@ h1 {
 /* === Media queries ===*/
 
 @media only screen and (max-width: 1400px) {
+  /* === main === */
+
   #container {
     width: 60%;
   }
 }
 
 @media only screen and (max-width: 900px) {
+  /* === main ===  */
+
   #container {
     width: 80%;
   }
@@ -242,12 +246,16 @@ h1 {
     font-size: 16pt;
   }
 
+  /* === Weather Result === */
+
   #temperature {
     font-size: 40pt;
   }
 }
 
 @media only screen and (max-width: 600px) {
+  /* === Main === */
+
   #container {
     width: 90%;
   }
@@ -256,9 +264,20 @@ h1 {
     font-size: 14px;
   }
 
+  /* === Section Wrappers === */
+
   #searchWrapper {
     gap: 0px 30px;
   }
+
+  /* === Search Fields === */
+
+  #city,
+  #country {
+    padding: 0px 20px;
+  }
+
+  /* === Weather Result === */
 
   #temperature {
     font-size: 25pt;
@@ -270,15 +289,6 @@ h1 {
     height: 120px;
   }
 
-  .middle {
-    flex-direction: column;
-  }
-
-  #timeAndLocation {
-    margin-top: 10px;
-    font-size: 14px;
-  }
-
   #weatherInformation > div {
     font-size: 10pt;
   }
@@ -288,9 +298,15 @@ h1 {
     font-size: 11px;
   }
 
-  #city,
-  #country {
-    padding: 0px 20px;
+  #timeAndLocation {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+
+  /* === Search History ===  */
+
+  .middle {
+    flex-direction: column;
   }
 
   #query,
