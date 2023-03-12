@@ -75,14 +75,14 @@ The website is hosted using Netlify.
 
 **Steps to run project locally**
 
-1. Fork or git clone the project at https://github.com/kshannn/react-weather-app
+1. Fork or git clone the project from https://github.com/kshannn/react-weather-app into preferred directory
 
-2. Run npm install to install the dependencies
+2. Navigate to the directory where the project is at and run npm install to install the dependencies
 ```
 npm install
 ```
 
-3. Obtain OpenWeather API key (requires account creation at https://openweathermap.org/)
+3. Obtain OpenWeather API key (Requires account creation at https://openweathermap.org/)
 
 4. Create an .env file, include the following variable in the .env file and replace <API_KEY> with the API key obtained from the previous step: 
 ```
