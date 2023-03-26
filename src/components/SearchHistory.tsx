@@ -64,36 +64,39 @@ export const SearchHistory = () => {
 
   const recallSearchQuery = async (city: string, country: string) => {
     setIsPendingAction(true);
+
     try {
       const weatherResponse: any = await fetchWeather({
         city: city,
         country: country,
         isCountryCode: true,
       });
+
       if (weatherResponse.status === HTTP_STATUS.OK) {
         const {
-          country,
+          country: countryCode,
           description,
-          dt,
+          dt: dateTime,
           humidity,
-          name,
-          temp,
+          name: country,
+          temp: temperature,
           icon,
-          temp_max,
-          temp_min,
+          temp_max: maxTemperature,
+          temp_min: minTemperature,
         } = weatherResponse.data;
 
         setWeatherData({
-          temperature: temp,
-          maxTemperature: temp_max,
-          minTemperature: temp_min,
+          temperature,
+          maxTemperature,
+          minTemperature,
           humidity,
-          dateTime: dt,
-          country: name,
-          countryCode: country,
+          dateTime,
+          country,
+          countryCode,
           description,
           icon,
         });
+
         setDefaultDisplay(true);
       } else {
         setError(weatherResponse?.data?.message || FETCH_DATA_FAIL_MESSAGE);
@@ -122,6 +125,9 @@ export const SearchHistory = () => {
           index: number
         ) => {
           const currentIndex = index + offset;
+          const formattedSearchHistoryTime = moment(queryTime, "X").format(
+            SEARCH_HISTORY_TIME_FORMAT
+          );
 
           return (
             <div className="queryRow" key={currentIndex}>
@@ -130,9 +136,7 @@ export const SearchHistory = () => {
               </div>
               <div className="middle">
                 <div id="query">{renderCountryDetails(countryCode, query)}</div>
-                <div id="queryTime">
-                  {moment(queryTime, "X").format(SEARCH_HISTORY_TIME_FORMAT)}
-                </div>
+                <div id="queryTime">{formattedSearchHistoryTime}</div>
               </div>
               <div className="right">
                 <div id="queryRecall">
@@ -168,6 +172,7 @@ export const SearchHistory = () => {
       <h1>Search History</h1>
 
       {renderHistory()}
+
       <ReactPaginate
         pageCount={Math.ceil(
           listOfSearchHistory.length / NUM_OF_ITEMS_PER_PAGE

@@ -28,6 +28,10 @@ export const WeatherResult = () => {
     minTemperature,
   } = weatherData;
 
+  const formattedTime = moment(dateTime, "X").format(
+    CURRENT_RESULT_TIME_FORMAT
+  );
+
   return (
     <div id="resultWrapper">
       <h1>Today's Weather</h1>
@@ -54,9 +58,7 @@ export const WeatherResult = () => {
           </div>
           <div id="timeAndLocation">
             <div>{renderCountryDetails(countryCode, country)}</div>
-            <div>
-              {moment(dateTime, "X").format(CURRENT_RESULT_TIME_FORMAT)}
-            </div>
+            <div>{formattedTime}</div>
           </div>
         </div>
       ) : (

@@ -43,18 +43,22 @@ export const SearchFields = () => {
     });
   };
 
-  const addToSearchHistory = (body: {
+  const addToSearchHistory = ({
+    query,
+    queryTime,
+    countryCode,
+  }: {
     query: string;
     queryTime: number;
     countryCode: string;
   }) => {
     const updatedSearchHistory = [
-      ...listOfSearchHistory,
       {
-        query: body.query,
-        queryTime: body.queryTime,
-        countryCode: body.countryCode,
+        query,
+        queryTime,
+        countryCode,
       },
+      ...listOfSearchHistory,
     ];
     setListOfSearchHistory(updatedSearchHistory);
     localStorage.setItem("searchHistory", JSON.stringify(updatedSearchHistory));
@@ -80,16 +84,16 @@ export const SearchFields = () => {
           dt,
           humidity,
           name,
-          temp,
+          temp: temperature,
           icon,
-          temp_max,
-          temp_min,
+          temp_max: maxTemperature,
+          temp_min: minTemperature,
         } = weatherResponse.data;
 
         setWeatherData({
-          temperature: temp,
-          maxTemperature: temp_max,
-          minTemperature: temp_min,
+          temperature,
+          maxTemperature,
+          minTemperature,
           humidity,
           dateTime: dt,
           country: name,
