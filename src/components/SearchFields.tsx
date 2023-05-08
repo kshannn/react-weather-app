@@ -147,6 +147,7 @@ export const SearchFields = () => {
         <FontAwesomeIcon
           icon={faMagnifyingGlass as IconProp}
           id="search"
+          title="searchIcon"
           onClick={searchQuery}
         />
       </div>
@@ -155,6 +156,7 @@ export const SearchFields = () => {
         <FontAwesomeIcon
           icon={faXmark as IconProp}
           id="clear"
+          title="clearIcon"
           onClick={clearQuery}
         />
       </div>

@@ -15,7 +15,7 @@ export const renderCountryDetails = (
 
 export const WeatherResult = () => {
   const weatherContext = useContext(WeatherContext);
-  const { weatherData, defaultDisplay }: any = weatherContext;
+  const { weatherData = [], defaultDisplay }: any = weatherContext;
   const {
     country,
     countryCode,
@@ -57,7 +57,7 @@ export const WeatherResult = () => {
             </div>
           </div>
           <div id="timeAndLocation">
-            <div>{renderCountryDetails(countryCode, country)}</div>
+            <div title="country">{renderCountryDetails(countryCode, country)}</div>
             <div>{formattedTime}</div>
           </div>
         </div>

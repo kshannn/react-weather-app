@@ -109,12 +109,12 @@ export const SearchHistory = () => {
 
   const renderHistory = () => {
     const offset = currentPage * NUM_OF_ITEMS_PER_PAGE;
-    const currentPageHistory = listOfSearchHistory.slice(
+    const currentPageHistory = listOfSearchHistory && listOfSearchHistory.slice(
       offset,
       offset + NUM_OF_ITEMS_PER_PAGE
     );
 
-    if (currentPageHistory.length) {
+    if (currentPageHistory?.length) {
       return currentPageHistory.map(
         (
           {
@@ -130,7 +130,7 @@ export const SearchHistory = () => {
           );
 
           return (
-            <div className="queryRow" key={currentIndex}>
+            <div className="queryRow" key={queryTime} title="query">
               <div className="left">
                 <div id="historyIndex">{currentIndex + 1}</div>
               </div>
@@ -163,7 +163,7 @@ export const SearchHistory = () => {
         }
       );
     } else {
-      return <div className="queryRow">No Record</div>;
+      return <div className="queryRow" title="no-record">No Record</div>;
     }
   };
 
@@ -175,7 +175,7 @@ export const SearchHistory = () => {
 
       <ReactPaginate
         pageCount={Math.ceil(
-          listOfSearchHistory.length / NUM_OF_ITEMS_PER_PAGE
+          listOfSearchHistory?.length / NUM_OF_ITEMS_PER_PAGE
         )}
         onPageChange={handlePageChange}
         containerClassName="pagination"
