@@ -53,7 +53,8 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@types/lodash": "^4.14.191",
-    "dotenv-webpack": "^8.0.1"
+    "dotenv-webpack": "^8.0.1",
+    "msw": "^1.2.1"
   },
   "jest": {
     "moduleNameMapper": {

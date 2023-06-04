@@ -109,10 +109,9 @@ export const SearchHistory = () => {
 
   const renderHistory = () => {
     const offset = currentPage * NUM_OF_ITEMS_PER_PAGE;
-    const currentPageHistory = listOfSearchHistory && listOfSearchHistory.slice(
-      offset,
-      offset + NUM_OF_ITEMS_PER_PAGE
-    );
+    const currentPageHistory =
+      listOfSearchHistory &&
+      listOfSearchHistory.slice(offset, offset + NUM_OF_ITEMS_PER_PAGE);
 
     if (currentPageHistory?.length) {
       return currentPageHistory.map(
@@ -146,6 +145,7 @@ export const SearchHistory = () => {
                     onClick={() => {
                       recallSearchQuery(query, countryCode);
                     }}
+                    title="refetchButton"
                   />
                 </div>
                 <div id="historyDelete">
@@ -155,6 +155,7 @@ export const SearchHistory = () => {
                     onClick={() => {
                       clearSearchHistory(currentIndex);
                     }}
+                    title="clearHistoryButton"
                   />
                 </div>
               </div>
@@ -163,7 +164,11 @@ export const SearchHistory = () => {
         }
       );
     } else {
-      return <div className="queryRow" title="no-record">No Record</div>;
+      return (
+        <div className="queryRow" title="no-record">
+          No Record
+        </div>
+      );
     }
   };
 
