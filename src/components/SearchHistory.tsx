@@ -17,6 +17,7 @@ import { fetchWeather } from "../services/weatherService";
 import { toast } from "react-toastify";
 import ReactPaginate from "react-paginate";
 import { renderCountryDetails } from "./WeatherResult";
+import { Query, SearchHistoryType } from "../types";
 
 export const SearchHistory = () => {
   const weatherContext: any = useContext(WeatherContext);
@@ -36,7 +37,8 @@ export const SearchHistory = () => {
   };
 
   useEffect(() => {
-    const _searchHistoryList: any = localStorage.getItem("searchHistory");
+    const _searchHistoryList: string | null =
+      localStorage.getItem("searchHistory");
     if (_searchHistoryList) {
       setListOfSearchHistory(JSON.parse(_searchHistoryList));
     }
@@ -62,7 +64,7 @@ export const SearchHistory = () => {
     setListOfSearchHistory(_updatedSearchHistory);
   };
 
-  const recallSearchQuery = async (city: string, country: string) => {
+  const recallSearchQuery = async ({ city, country }: Query) => {
     setIsPendingAction(true);
 
     try {
@@ -108,7 +110,7 @@ export const SearchHistory = () => {
   };
 
   const renderHistory = () => {
-    const offset = currentPage * NUM_OF_ITEMS_PER_PAGE;
+    const offset: number = currentPage * NUM_OF_ITEMS_PER_PAGE;
     const currentPageHistory =
       listOfSearchHistory &&
       listOfSearchHistory.slice(offset, offset + NUM_OF_ITEMS_PER_PAGE);
@@ -116,17 +118,14 @@ export const SearchHistory = () => {
     if (currentPageHistory?.length) {
       return currentPageHistory.map(
         (
-          {
-            query,
-            queryTime,
-            countryCode,
-          }: { query: string; queryTime: number; countryCode: string },
+          { query, queryTime, countryCode }: SearchHistoryType,
           index: number
         ) => {
-          const currentIndex = index + offset;
-          const formattedSearchHistoryTime = moment(queryTime, "X").format(
-            SEARCH_HISTORY_TIME_FORMAT
-          );
+          const currentIndex: number = index + offset;
+          const formattedSearchHistoryTime: string = moment(
+            queryTime,
+            "X"
+          ).format(SEARCH_HISTORY_TIME_FORMAT);
 
           return (
             <div className="queryRow" key={queryTime} title="query">
@@ -143,7 +142,7 @@ export const SearchHistory = () => {
                     icon={faMagnifyingGlass as IconProp}
                     id="recall"
                     onClick={() => {
-                      recallSearchQuery(query, countryCode);
+                      recallSearchQuery({ city: query, country: countryCode });
                     }}
                     title="refetchButton"
                   />

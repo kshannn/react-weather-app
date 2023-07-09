@@ -6,18 +6,13 @@ import { toast } from "react-toastify";
 import { fetchWeather } from "../services/weatherService";
 import WeatherContext from "../contexts/WeatherContext";
 import { FETCH_DATA_FAIL_MESSAGE, HTTP_STATUS } from "../constants";
-
-interface Query {
-  country: string;
-  city: string;
-}
+import { Query, SearchHistoryType } from "../types";
 
 export const SearchFields = () => {
   const [query, setQuery] = useState<Query>({
     country: "",
     city: "",
   });
-  const weatherContext: any = useContext(WeatherContext);
   const {
     listOfSearchHistory,
     setListOfSearchHistory,
@@ -26,7 +21,7 @@ export const SearchFields = () => {
     setIsPendingAction,
     setError,
     setDefaultDisplay,
-  } = weatherContext;
+  }: any = useContext(WeatherContext);
 
   useEffect(() => {
     if (isPendingAction) {
@@ -47,12 +42,8 @@ export const SearchFields = () => {
     query,
     queryTime,
     countryCode,
-  }: {
-    query: string;
-    queryTime: number;
-    countryCode: string;
-  }) => {
-    const updatedSearchHistory = [
+  }: SearchHistoryType) => {
+    const updatedSearchHistory: SearchHistoryType[] = [
       {
         query,
         queryTime,

@@ -8,18 +8,7 @@ import { fetchWeather } from "./services/weatherService";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
-
-export interface Weather {
-  temperature: number;
-  maxTemperature: number;
-  minTemperature: number;
-  humidity: number;
-  dateTime: number;
-  country: string;
-  countryCode: string;
-  description: string;
-  icon: string;
-}
+import { SearchHistoryType, Weather } from "./types";
 
 const App = () => {
   const [weatherData, setWeatherData] = useState<Weather>({
@@ -33,10 +22,14 @@ const App = () => {
     description: "",
     icon: "",
   });
-  const [listOfSearchHistory, setListOfSearchHistory] = useState([]);
-  const [isPendingAction, setIsPendingAction] = useState(false);
-  const [error, setError] = useState("");
-  const [defaultDisplay, setDefaultDisplay] = useState(true);
+  const [listOfSearchHistory, setListOfSearchHistory] = useState<
+    SearchHistoryType[]
+  >([]);
+  const [isPendingAction, setIsPendingAction] =
+    useState<React.SetStateAction<boolean>>(false);
+  const [error, setError] = useState<React.SetStateAction<any>>("");
+  const [defaultDisplay, setDefaultDisplay] =
+    useState<React.SetStateAction<boolean>>(true);
 
   useEffect(() => {
     if (error) {
